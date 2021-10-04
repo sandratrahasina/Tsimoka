@@ -11,7 +11,9 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: MainFrame()
+      body: SafeArea(
+        child: MainFrame()
+      )
     );
   }
 }
@@ -79,18 +81,16 @@ class MenuCardContainerHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        if(MediaQuery.of(context).size.width <= maxWidthMobile){//mobile
-          return Intermediaire(sWidth: 300, cac: 1, crossSpacing: 20, mainSpacing: 20 ,);
-        }
-        else if(MediaQuery.of(context).size.width <= 1024){//tablet
-          return Intermediaire(sWidth: 600, cac: 2, crossSpacing: 80, mainSpacing: 80 ,);
-        }
-        else{//tablet
-          return Intermediaire(sWidth: 700, cac: 2, crossSpacing: 90, mainSpacing: 90 ,);
-        }
-      }
-    
-  
+    if(MediaQuery.of(context).size.width <= maxWidthMobile){//mobile
+      return Intermediaire(sWidth: 300, cac: 1, crossSpacing: 20, mainSpacing: 20 ,);
+    }
+    else if(MediaQuery.of(context).size.width <= 1024){//tablet
+      return Intermediaire(sWidth: 600, cac: 2, crossSpacing: 80, mainSpacing: 80 ,);
+    }
+    else{//tablet
+      return Intermediaire(sWidth: 700, cac: 2, crossSpacing: 90, mainSpacing: 90 ,);
+    }
+  }
 }
 
 class Intermediaire extends StatelessWidget {
@@ -127,20 +127,43 @@ class Intermediaire extends StatelessWidget {
             ),
           ),
           //-----------------------------
-          Container(
-            padding: const EdgeInsets.fromLTRB(20, 30, 20, 20),
-            margin: const EdgeInsets.all(30),
-            child: ListWheelScrollView(
-              itemExtent: 250,
-              magnification: 0.1,
-              overAndUnderCenterOpacity: 0.95,
-              diameterRatio: 2.5,
-              children: const <Widget>[
-                    CardMenuHome(pathSVG: 'assets/icons/farmer.svg', cardName: 'paysans',),
-                    CardMenuHome(pathSVG: 'assets/icons/fir.svg', cardName: 'Parcelles',),
-                    CardMenuHome(pathSVG: 'assets/icons/group.svg', cardName: 'Accompagements',),
-                    CardMenuHome(pathSVG: 'assets/icons/vegetables.svg', cardName: 'Recoltes',),                  
-                  ],
+          Center(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width*2/3+50,
+              color : Colors.amberAccent,
+              padding: const EdgeInsets.fromLTRB(20, 30, 20, 20),
+              margin: const EdgeInsets.all(30),
+              // child: ListWheelScrollView(
+              //   itemExtent: 250,
+              //   magnification: 0.01,
+              //   overAndUnderCenterOpacity: 0.99,
+              //   diameterRatio: 3.5,
+              //   children: <Widget>[
+              //         TextButton(
+              //           onPressed: () { print("coucou"); },
+              //           child: Text("coucou"),
+              //         ),
+              //         CardMenuHome(pathSVG: 'assets/icons/farmer.svg', cardName: 'paysans',),
+              //         CardMenuHome(pathSVG: 'assets/icons/fir.svg', cardName: 'Parcelles',),
+              //         CardMenuHome(pathSVG: 'assets/icons/group.svg', cardName: 'Accompagements',),
+              //         CardMenuHome(pathSVG: 'assets/icons/vegetables.svg', cardName: 'Recoltes',),                  
+              //       ],
+              // ),
+              child:  GridView.count(
+                childAspectRatio: 0.9,
+                primary: false,
+                padding: const EdgeInsets.fromLTRB(20, 100, 20, 20),
+                crossAxisSpacing: crossSpacing,
+                mainAxisSpacing: mainSpacing,
+                crossAxisCount: cac,
+                children: const <Widget>[
+                  CardMenuHome(pathSVG: 'assets/icons/farmer.svg', cardName: 'paysans',),
+                  CardMenuHome(pathSVG: 'assets/icons/fir.svg', cardName: 'Parcelles',),
+                  CardMenuHome(pathSVG: 'assets/icons/group.svg', cardName: 'Accompagements',),
+                  CardMenuHome(pathSVG: 'assets/icons/vegetables.svg', cardName: 'Recoltes',),                  
+                ],
+              )
             ),
           ),
           //-----------------------------

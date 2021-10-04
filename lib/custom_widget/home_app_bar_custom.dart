@@ -95,6 +95,7 @@ class CustomAppBar extends StatelessWidget {
   }
 }
 
+//---------------------------------------------------------------------------------------
 class InfoPers extends StatelessWidget {
   const InfoPers({
     Key? key,
@@ -165,6 +166,7 @@ class InfoPers extends StatelessWidget {
   }
 }
 
+//---------------------------------------------------------------------------------------
 class menuCombo extends StatelessWidget {
   const menuCombo({
     Key? key,
@@ -193,6 +195,7 @@ class menuCombo extends StatelessWidget {
   }
 }
 
+//---------------------------------------------------------------------------------------
 class IconMenu extends StatelessWidget {
   const IconMenu({
     Key? key,

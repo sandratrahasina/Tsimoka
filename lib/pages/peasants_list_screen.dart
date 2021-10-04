@@ -32,13 +32,13 @@ class MainFrame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
         if(MediaQuery.of(context).size.width <= maxWidthMobile){//mobile
-          return PeasantsList();
+          return const PeasantsList();
         }
         else if(MediaQuery.of(context).size.width <= maxWidthTablet){//tablet
-          return PeasantsList();
+          return const PeasantsList();
         }
         else{
-          return PeasantsList();
+          return const PeasantsList();
         }
   }
 }
@@ -50,29 +50,31 @@ class PeasantsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          SearchBarCustom(),
-          Container(
-            height: MediaQuery.of(context).size.height-200,
-            child: ListView(
-              children: const [
-                PeasantUnitList(),
-                PeasantUnitList(),
-                PeasantUnitList(),
-                PeasantUnitList(),
-                PeasantUnitList(),
-                PeasantUnitList(),
-                PeasantUnitList(),
-                PeasantUnitList(),
-                PeasantUnitList(),
-                PeasantUnitList(),
-              ],
-            ),
-          )
-        ],
-      ),);
+    return Scaffold(
+      body: Container(
+        child: Column(
+          children: [
+            SearchBarCustom(),
+            Container(
+              height: MediaQuery.of(context).size.height-200,
+              child: ListView(
+                children: const [
+                  PeasantUnitList(),
+                  PeasantUnitList(),
+                  PeasantUnitList(),
+                  PeasantUnitList(),
+                  PeasantUnitList(),
+                  PeasantUnitList(),
+                  PeasantUnitList(),
+                  PeasantUnitList(),
+                  PeasantUnitList(),
+                  PeasantUnitList(),
+                ],
+              ),
+            )
+          ],
+        ),),
+    );
   }
 }
 
