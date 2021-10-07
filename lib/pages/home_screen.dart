@@ -130,8 +130,7 @@ class Intermediaire extends StatelessWidget {
           Center(
             child: Container(
               height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width*2/3+50,
-              color : Colors.amberAccent,
+              width: MediaQuery.of(context).size.width*2/3,
               padding: const EdgeInsets.fromLTRB(20, 30, 20, 20),
               margin: const EdgeInsets.all(30),
               // child: ListWheelScrollView(
@@ -150,20 +149,21 @@ class Intermediaire extends StatelessWidget {
               //         CardMenuHome(pathSVG: 'assets/icons/vegetables.svg', cardName: 'Recoltes',),                  
               //       ],
               // ),
+
               child:  GridView.count(
-                childAspectRatio: 0.9,
+                //childAspectRatio: 0.9,
                 primary: false,
                 padding: const EdgeInsets.fromLTRB(20, 100, 20, 20),
                 crossAxisSpacing: crossSpacing,
                 mainAxisSpacing: mainSpacing,
                 crossAxisCount: cac,
                 children: const <Widget>[
-                  CardMenuHome(pathSVG: 'assets/icons/farmer.svg', cardName: 'paysans',),
-                  CardMenuHome(pathSVG: 'assets/icons/fir.svg', cardName: 'Parcelles',),
-                  CardMenuHome(pathSVG: 'assets/icons/group.svg', cardName: 'Accompagements',),
-                  CardMenuHome(pathSVG: 'assets/icons/vegetables.svg', cardName: 'Recoltes',),                  
+                  CardMenuHome(pathSVG: 'assets/icons/farmer.svg', cardName: 'paysans', route: '/peasantsList'),
+                  CardMenuHome(pathSVG: 'assets/icons/fir.svg', cardName: 'Parcelles', route: ''),
+                  CardMenuHome(pathSVG: 'assets/icons/group.svg', cardName: 'Accompagements', route: ''),
+                  CardMenuHome(pathSVG: 'assets/icons/vegetables.svg', cardName: 'Recoltes', route: ''),                  
                 ],
-              )
+              ),
             ),
           ),
           //-----------------------------
@@ -183,10 +183,10 @@ class Intermediaire extends StatelessWidget {
               mainAxisSpacing: mainSpacing,
               crossAxisCount: cac,
               children: const <Widget>[
-                CardMenuHome(pathSVG: 'assets/icons/farmer.svg', cardName: 'paysans',),
-                CardMenuHome(pathSVG: 'assets/icons/fir.svg', cardName: 'Parcelles',),
-                CardMenuHome(pathSVG: 'assets/icons/group.svg', cardName: 'Accompagements',),
-                CardMenuHome(pathSVG: 'assets/icons/vegetables.svg', cardName: 'Recoltes',),                  
+                CardMenuHome(pathSVG: 'assets/icons/farmer.svg', cardName: 'paysans', route: '/peasantsList'),
+                CardMenuHome(pathSVG: 'assets/icons/fir.svg', cardName: 'Parcelles', route: ''),
+                CardMenuHome(pathSVG: 'assets/icons/group.svg', cardName: 'Accompagements', route: ''),
+                CardMenuHome(pathSVG: 'assets/icons/vegetables.svg', cardName: 'Recoltes', route: ''),                 
               ],
             )
         ),

@@ -17,9 +17,9 @@ class SearchBarCustom extends StatelessWidget{
                 Row(
                   children: const [
                     Spacer(flex: 1,),
-                    roundedIconBC(icon : Icons.qr_code, unitSize: 2),
+                    roundedIconBC(icon : Icons.qr_code, unitSize: 2, route: '/scanQRcode'),
                     Spacer(flex: 3,),
-                    roundedIconBC(icon : Icons.add, unitSize: 2), 
+                    roundedIconBC(icon : Icons.add, unitSize: 2, route: '/peasantsAdd'), 
                     Spacer(flex: 1,),
                     ],
                 ),
@@ -52,9 +52,9 @@ class SearchBarCustom extends StatelessWidget{
                   child: Row(
                     children: const [
                       Spacer(flex:1),
-                      roundedIconBC(icon : Icons.qr_code,  unitSize: 2), 
+                      roundedIconBC(icon : Icons.qr_code, unitSize: 2, route: '/scanQRcode'), 
                       Spacer(flex:3),
-                      roundedIconBC(icon : Icons.add,  unitSize: 2), 
+                      roundedIconBC(icon : Icons.add, unitSize: 2, route: '/peasantsAdd'), 
                       Spacer(flex:1),
                     ],
                     
@@ -84,9 +84,9 @@ class SearchBarCustom extends StatelessWidget{
                   child: Row(
                     children: const [
                       Spacer(flex:1),
-                      roundedIconBC(icon : Icons.qr_code, unitSize: 2,), 
+                      roundedIconBC(icon : Icons.qr_code, unitSize: 2, route: '/scanQRcode'), 
                       Spacer(flex:3),
-                      roundedIconBC(icon : Icons.add, unitSize: 2,), 
+                      roundedIconBC(icon : Icons.add, unitSize: 2, route: '/peasantsAdd'), 
                       Spacer(flex:1),
                     ],
                   ),
@@ -180,11 +180,12 @@ class SearchBarBC extends StatelessWidget {
 // ignore: camel_case_types
 class roundedIconBC extends StatelessWidget {
   const roundedIconBC({
-    Key? key, required this.icon, required this.unitSize
+    Key? key, required this.icon, required this.unitSize, required this.route
   }) : super(key: key);
 
   final IconData icon;
   final double unitSize; 
+  final String route;
   //ilaina rehefa version mobile de atao kely kokoa ny hangezan'ilay icon
 
   @override
@@ -205,7 +206,9 @@ class roundedIconBC extends StatelessWidget {
         ),
         width: 30*unitSize, height: 30*unitSize,
         child: IconButton(
-          onPressed: (){},
+          onPressed: (){
+            Navigator.pushNamed(context, route );
+          },
           icon: Icon(icon, size: 20*unitSize, color: myGreen)
         )
       ),

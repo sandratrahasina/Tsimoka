@@ -18,6 +18,7 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
 
     return AppBar(
+      leading: Icon(Icons.chevron_left_outlined, size: 40, color: Colors.transparent, ),
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       flexibleSpace: Container(
@@ -177,16 +178,16 @@ class menuCombo extends StatelessWidget {
     return LayoutBuilder(
       builder: (context,constraints){
         if(MediaQuery.of(context).size.width <= maxWidthMobile){//mobile
-          return IconMenu(icon : Icons.menu,);
+          return IconMenu(icon : Icons.menu, iconsize: 40, route: '/menu');
         }
         else {//tablet
           return Row(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              IconMenu(icon : Icons.notifications,), //notif
-              IconMenu(icon : Icons.sync,), //refresh
-              IconMenu(icon : Icons.more_vert,), //menu
+            children: const <Widget>[
+              IconMenu(icon : Icons.notifications, iconsize: 40, route: '/notification'), //notif
+              IconMenu(icon : Icons.sync, iconsize: 40, route: '/refresh'), //refresh
+              IconMenu(icon : Icons.more_vert,iconsize: 40, route: '/menu'), //menu
             ],
           );
         }
@@ -199,17 +200,32 @@ class menuCombo extends StatelessWidget {
 class IconMenu extends StatelessWidget {
   const IconMenu({
     Key? key,
-    required this.icon,
+    required this.icon, required this.iconsize, required this.route,
   }) : super(key: key);
 
   final IconData icon;
+  final double iconsize;
+  final String route;
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-        onPressed: (){}, 
-        icon: Icon(icon, size: 40, color: Colors.white,),
-      
-    );
+    if(route == 'return'){
+      return IconButton(
+        onPressed: (){
+           Navigator.pop(context);
+        }, 
+        icon: Icon(icon, size: iconsize, color: Colors.white,),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15)
+      );
+    }
+    else{
+      return IconButton(
+        onPressed: (){
+           Navigator.pushNamed(context, route);
+        }, 
+        icon: Icon(icon, size: iconsize, color: Colors.white,),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15)
+      );
+    }    
   }
 }

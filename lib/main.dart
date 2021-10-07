@@ -1,29 +1,41 @@
 import 'package:flutter/material.dart';
+
+import 'package:tsimoka/utils/_var.dart';
+
 import 'package:tsimoka/pages/home_screen.dart';
+import 'package:tsimoka/pages/peasants_list_screen.dart';
+import 'package:tsimoka/pages/peasants_add_form.dart';
+import 'package:tsimoka/pages/peasants_add_done.dart';
+
+import 'package:tsimoka/pages/notification_screen.dart';
+import 'package:tsimoka/pages/menu.dart';
+
+import 'package:tsimoka/pages/scan_qr_code.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Tsimoka',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: myGreen,
       ),
-      home: HomeScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomeScreen(),
+        '/peasantsList': (context) => const PeasantsListScreen(),
+        '/peasantsAdd' : (context) => const PeasantsAddScreen(),
+        '/peasantsAddDone' : (context) => const PeasantsAddDone(),
+
+        '/notification' : (context) => const NotificationScreen(),
+        '/menu' : (context) => const MenuScreen(),
+
+        '/scanQRcode' : (context) =>  QRScanPage(),
+      },
     );
   }
 }

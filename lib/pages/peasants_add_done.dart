@@ -7,9 +7,6 @@ import 'package:tsimoka/utils/_var.dart';
 import 'package:tsimoka/custom_widget/app_bar_custom.dart';
 
 
-import 'package:provider/provider.dart';
-import 'package:tsimoka/main.dart';
-
 class PeasantsAddDone extends StatelessWidget{
   const PeasantsAddDone({Key? key}): super(key: key);
 

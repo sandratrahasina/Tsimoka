@@ -7,22 +7,17 @@ class CardMenuHome extends StatelessWidget {
     Key? key,
     required this.pathSVG,
     required this.cardName, 
-    //required this.route,
+    required this.route,
   }) : super(key: key);
 
   final String pathSVG;
   final String cardName;
-  //final String route;
+  final String route;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context, 
-          MaterialPageRoute(
-            builder: (context) => PeasantsListScreen() 
-          ),
-        );
+        Navigator.pushNamed(context, route);
       },
       child: Container(
         child: Center(
@@ -42,15 +37,12 @@ class CardMenuHome extends StatelessWidget {
               //soratra
               Expanded(
                 flex: 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    cardName,
-                    style: TextStyle(
-                      color: Colors.black.withOpacity(0.8),
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold
-                    ),
+                child: Text(
+                  cardName,
+                  style: TextStyle(
+                    color: Colors.black.withOpacity(0.8),
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold
                   ),
                 ),
               )
