@@ -12,13 +12,13 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(70);
+  Size get preferredSize => const Size.fromHeight(70);
 
   @override
   Widget build(BuildContext context){
     return AppBar(
       backgroundColor : mainThemeColor,
-      leading: IconMenu( icon : Icons.chevron_left_outlined, iconsize: 40, route : 'return' ),
+      leading: const IconMenu( icon : Icons.chevron_left_outlined, iconsize: 40, route : 'return' ),
       actions: const <Widget>[
         IconMenu(icon : Icons.notifications, iconsize: 40, route: '/notification'), //notif
         IconMenu(icon : Icons.sync, iconsize: 40, route: '/refresh'), //refresh

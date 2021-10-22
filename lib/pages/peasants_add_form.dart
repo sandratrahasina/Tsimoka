@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:tsimoka/main.dart';
 
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
+
 import 'package:tsimoka/utils/_var.dart';
 import 'package:tsimoka/custom_widget/app_bar_custom.dart';
 import 'package:tsimoka/custom_widget/peasant_unit_list.dart';
 import 'package:tsimoka/custom_widget/peasant_search_bar.dart';
 
 import 'package:flutter/scheduler.dart' show timeDilation;
+
+import 'package:provider/provider.dart';
 
 class PeasantsAddScreen extends StatelessWidget{
   const PeasantsAddScreen({Key? key}): super(key: key);
@@ -54,163 +61,185 @@ class PeasantAddForm extends StatefulWidget {
 
 class _PeasantAddFormState extends State<PeasantAddForm> {
 
+  // ignore: non_constant_identifier_names
   final _PeasantAddformKey = GlobalKey<FormState>();  
+
+  final nomCtrl = TextEditingController();
+  final prenomCtrl = TextEditingController();
+  final fokotanyCtrl = TextEditingController();
+  final zonePlantationCtrl = TextEditingController();
+  final distanceCtrl = TextEditingController();
+  final filiationCtrl = TextEditingController();
+  final numeroCtrl = TextEditingController();
+  final ageCtrl = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Form(
-        key: _PeasantAddformKey,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              //  Information personnelles
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0.9,0.5),
-                      blurRadius: 1,
-                      spreadRadius: 1,
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Information personnelles', style: TextStyle(fontSize: 18, color: myGreen),),
-                    const NomFF(),
-                    const PrenomFF(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        GenreDD(),
-                        AgeFF()
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              //  Productions 
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
-                width: MediaQuery.of(context).size.width,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0.9,0.5),
-                      blurRadius: 1,
-                      spreadRadius: 1,
-                    ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Productions', style: TextStyle(fontSize: 18, color: myGreen),),
-                    Text('Vos produits', style: TextStyle(fontSize: 17, color: mainThemeColor ),),
-                    IconButton(
-                      onPressed: (){}, 
-                      icon: Icon(Icons.add, color: myGreen,size: 30,)
-                    ),
-                    Text('Certification', style: TextStyle(fontSize: 17, color: mainThemeColor ),),
-                    Container(
-                      width: 200,
-                      child: Column(
-                        children: const [
-                          certificationCBBio(),
-                          certificationCBBioFFL(),
-                          certificationCBConventinnel(),
-                        ],
+    return ChangeNotifierProvider(
+        create: (context) => ModelProviderSary(),
+        child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Form(
+          key: _PeasantAddformKey,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                //  Information personnelles
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0.9,0.5),
+                        blurRadius: 1,
+                        spreadRadius: 1,
                       ),
-                    ),
-                    
-                  ],
-                ),
-              ),
-
-              //  Localisation
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0.9,0.5),
-                      blurRadius: 1,
-                      spreadRadius: 1,
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Localisation', style: TextStyle(fontSize: 18, color: myGreen),),
-                    const ZoneDD(),
-                    const FokotanyFF(),
-                    const ZonePlantationFF(),
-                    const DistanceFF()
-                  ],
-                ),
-              ),
-              //  Information de contact
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      offset: Offset(0.9,0.5),
-                      blurRadius: 1,
-                      spreadRadius: 1,
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Informations de contact', style: TextStyle(fontSize: 18, color: myGreen),),
-                    const FiliationFF(),
-                    const NumeroFF()
-                  ],
-                ),
-              ),
-              //  sary
-        
-              //  btn terminer
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                width: 200,
-                child: TextButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.green) ,
-                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                    fixedSize: MaterialStateProperty.all<Size>(const Size.fromWidth(350))
+                    ],
                   ),
-                  onPressed: () { },
-                  child: const Text('Terminer', style: TextStyle(fontSize: 25),),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Information personnelles', style: TextStyle(fontSize: 18, color: myGreen),),
+                      NomFF(control : nomCtrl),
+                      PrenomFF(control : prenomCtrl),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          GenreDD(),
+                          AgeFF(control : ageCtrl)
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
+                //  Productions 
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0.9,0.5),
+                        blurRadius: 1,
+                        spreadRadius: 1,
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Productions', style: TextStyle(fontSize: 18, color: myGreen),),
+                      Text('Vos produits', style: TextStyle(fontSize: 17, color: mainThemeColor ),),
+                      IconButton(
+                        onPressed: (){}, 
+                        icon: Icon(Icons.add, color: myGreen,size: 30,)
+                      ),
+                      Text('Certification', style: TextStyle(fontSize: 17, color: mainThemeColor ),),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                          children: const [
+                            certificationCBBio(),
+                            certificationCBBioFFL(),
+                            certificationCBConventinnel(),
+                          ],
+                        ),
+                      ),
+                      
+                    ],
+                  ),
+                ),
+    
+                //  Localisation
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0.9,0.5),
+                        blurRadius: 1,
+                        spreadRadius: 1,
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Localisation', style: TextStyle(fontSize: 18, color: myGreen),),
+                      ZoneDD(),
+                      FokotanyFF(control : fokotanyCtrl),
+                      ZonePlantationFF(control : zonePlantationCtrl),
+                      DistanceFF(control : distanceCtrl)
+                    ],
+                  ),
+                ),
               
-            ],
+                //  Information de contact
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0.9,0.5),
+                        blurRadius: 1,
+                        spreadRadius: 1,
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Informations de contact', style: TextStyle(fontSize: 18, color: myGreen),),
+                      FiliationFF(control : filiationCtrl),
+                      NumeroFF(control : numeroCtrl)
+                    ],
+                  ),
+                ),
+                //  sary
+                Divider(thickness: 5,),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  alignment: Alignment.center,
+                  child: SaryAddContainer(),
+                ),
+                
+          
+                //  btn terminer
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                  width: 200,
+                  child: TextButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.green) ,
+                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      fixedSize: MaterialStateProperty.all<Size>(const Size.fromWidth(350))
+                    ),
+                    onPressed: () { print(this.nomCtrl.value);},
+                    child: const Text('Terminer', style: TextStyle(fontSize: 25),),
+                  ),
+                ),
+                
+              ],
+            ),
           ),
         ),
       ),
@@ -222,11 +251,15 @@ class _PeasantAddFormState extends State<PeasantAddForm> {
 class NomFF extends StatelessWidget {
   const NomFF({
     Key? key,
+    required  this.control,
   }) : super(key: key);
+
+  final TextEditingController control;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: control,
       decoration: InputDecoration(
         border: const UnderlineInputBorder(),
         label: Text('Nom', style: TextStyle(fontSize: 15, color: mainThemeColor),),
@@ -244,12 +277,15 @@ class NomFF extends StatelessWidget {
 //------------------------------------------------------------------------
 class PrenomFF extends StatelessWidget {
   const PrenomFF({
-    Key? key,
+    Key? key,required  this.control,
   }) : super(key: key);
+
+  final TextEditingController control;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: control,
       decoration: InputDecoration(
         border: const UnderlineInputBorder(),
         label: Text('Prenom', style: TextStyle(fontSize: 15, color: mainThemeColor),),
@@ -267,8 +303,10 @@ class PrenomFF extends StatelessWidget {
 //------------------------------------------------------------------------
 class AgeFF extends StatelessWidget {
   const AgeFF({
-    Key? key,
+    Key? key,required  this.control,
   }) : super(key: key);
+
+  final TextEditingController control;
 
   @override
   Widget build(BuildContext context) {
@@ -283,7 +321,8 @@ class AgeFF extends StatelessWidget {
           SizedBox(
             width: 30,
             child: TextFormField(
-              keyboardType: TextInputType.phone,
+              controller: control,
+              keyboardType: TextInputType.number,
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
                 isDense: true,
@@ -304,8 +343,7 @@ class AgeFF extends StatelessWidget {
 
 //------------------------------------------------------------------------
 class GenreDD extends StatefulWidget {
-  const GenreDD({Key? key}) : super(key: key);
-
+  const GenreDD({Key? key,}) : super(key: key);
   @override
   State<GenreDD> createState() => GenreDDState();
 }
@@ -313,6 +351,7 @@ class GenreDD extends StatefulWidget {
 
 class GenreDDState extends State<GenreDD> {
   String dropdownValue = 'Homme';
+
 
   @override
   Widget build(BuildContext context) {
@@ -388,12 +427,15 @@ class ZoneDDState extends State<ZoneDD> {
 //------------------------------------------------------------------------
 class FokotanyFF extends StatelessWidget {
   const FokotanyFF({
-    Key? key,
+    Key? key, required this.control,
   }) : super(key: key);
+
+  final TextEditingController control;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: control,
       decoration: InputDecoration(
         border: const UnderlineInputBorder(),
         label: Text('Fokotany', style: TextStyle(fontSize: 15, color: mainThemeColor),),
@@ -411,12 +453,15 @@ class FokotanyFF extends StatelessWidget {
 //------------------------------------------------------------------------
 class ZonePlantationFF extends StatelessWidget {
   const ZonePlantationFF({
-    Key? key,
+    Key? key, required this.control,
   }) : super(key: key);
+
+  final TextEditingController control;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: control,
       decoration: InputDecoration(
         border: const UnderlineInputBorder(),
         label: Text('Zone de planatation', style: TextStyle(fontSize: 15, color: mainThemeColor),),
@@ -434,8 +479,10 @@ class ZonePlantationFF extends StatelessWidget {
 //------------------------------------------------------------------------
 class DistanceFF extends StatelessWidget {
   const DistanceFF({
-    Key? key,
+    Key? key, required this.control,
   }) : super(key: key);
+
+  final TextEditingController control;
 
   @override
   Widget build(BuildContext context) {
@@ -451,6 +498,7 @@ class DistanceFF extends StatelessWidget {
           Flexible(
             flex : 1,
             child: TextFormField(
+              controller: control,
               keyboardType: TextInputType.phone,
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
@@ -473,12 +521,15 @@ class DistanceFF extends StatelessWidget {
 //------------------------------------------------------------------------
 class FiliationFF extends StatelessWidget {
   const FiliationFF({
-    Key? key,
+    Key? key, required this.control,
   }) : super(key: key);
+
+  final TextEditingController control;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: control,
       decoration: InputDecoration(
         border: const UnderlineInputBorder(),
         label: Text('Filiation collecte (Facultatif)', style: TextStyle(fontSize: 15, color: mainThemeColor),),
@@ -490,12 +541,16 @@ class FiliationFF extends StatelessWidget {
 //------------------------------------------------------------------------
 class NumeroFF extends StatelessWidget {
   const NumeroFF({
-    Key? key,
+    Key? key, required this.control, 
   }) : super(key: key);
+
+  final TextEditingController control;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: control,
+      keyboardType: TextInputType.phone,
       decoration: InputDecoration(
         border: const UnderlineInputBorder(),
         label: Text('Numéro téléphone', style: TextStyle(fontSize: 15, color: mainThemeColor),),
@@ -578,6 +633,381 @@ class _certificationCBConventinnelState extends State<certificationCBConventinne
           timeDilation = value! ? 2.0 : 1.0;
         });
       },
+    );
+  }
+}
+
+//--------------------------------------------------------------------------
+//--------------------------------------------------------------------------
+//--------------------------------------------------------------------------
+
+class ModelProviderSary extends ChangeNotifier
+{
+  List<File> _allSary = <File>[];
+
+  void addSary(File x){
+    _allSary.add(x);
+
+    notifyListeners();
+  }
+
+  void deleteSary(int index){
+    _allSary.remove(_allSary[index]);
+
+    notifyListeners();
+  }
+}
+
+//--------------------------------------------------------------------------
+class SaryAddbtn extends StatefulWidget {
+  const SaryAddbtn({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<SaryAddbtn> createState() => _SaryAddbtnState();
+}
+
+class _SaryAddbtnState extends State<SaryAddbtn> {
+  var imagePicker;
+  var type;
+
+  @override
+  void initState() {
+    super.initState();
+    imagePicker = ImagePicker();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<ModelProviderSary>(
+      builder: (context, provider, child){
+        return (
+          Container(
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(0.9,0.5),
+                    blurRadius: 1,
+                    spreadRadius: 1,
+                  ),
+                ],
+              ),
+            height: 100, width: 100,
+            child : ImageAff(ImageSourceType.camera),
+          )
+        ); 
+      }
+    );
+  }
+}
+
+//--------------------------------------------------------------------------
+class PDPAddbtn extends StatefulWidget {
+  const PDPAddbtn({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<PDPAddbtn> createState() => PDPAddbtnState();
+}
+
+class PDPAddbtnState extends State<PDPAddbtn> {
+  var imagePicker;
+  var type;
+  var image;
+
+  @override
+  void initState() {
+    super.initState();
+    imagePicker = ImagePicker();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<ModelProviderSary>(
+      builder: (context, provider, child){
+        return (
+          Container(
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(0.9,0.5),
+                    blurRadius: 1,
+                    spreadRadius: 1,
+                  ),
+                ],
+              ),
+            height: 100, width: 100,
+            child : PDPAff(ImageSourceType.camera),
+          )
+        ); 
+      }
+    );
+  }
+}
+
+//--------------------------------------------------------------------------
+class ContainerSary extends StatelessWidget {
+  const ContainerSary({
+    Key? key,
+    required  image,
+  }) : _image = image, super(key: key);
+
+  final _image;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 100, height: 100,
+      margin: EdgeInsets.all(5),
+      decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(0.9,0.5),
+                    blurRadius: 1,
+                    spreadRadius: 1,
+                  ),
+                ],
+              ),
+      child: _image != null
+        ? Image.file(
+            _image,
+            width: 100.0, height: 100.0,
+            fit: BoxFit.fitHeight,
+          )
+        : Container( decoration: BoxDecoration( color: Colors.amberAccent),
+          width: 100, height: 100,
+          child: Icon(
+            Icons.camera_alt,
+            color: Colors.grey[800],
+          ),
+        ),
+    );
+  }
+}
+
+//--------------------------------------------------------------------------
+class SaryAddContainer extends StatelessWidget {
+  const SaryAddContainer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<ModelProviderSary>(
+      builder: (context, provider, child){
+        return (
+          Container(
+            width: MediaQuery.of(context).size.width,
+            child: SizedBox(
+              width : MediaQuery.of(context).size.width,
+              child: Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                alignment: WrapAlignment.center,
+                
+                children: [
+                  PDPAddbtn(),
+                  SizedBox(width: 20,),
+                  SaryAddbtn(),
+                  Wrap(
+                    children: List.generate(
+                      provider._allSary.length, (index){
+                        return ContainerSary(image: provider._allSary[index]);
+                      } 
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        );
+      }
+    );
+  }
+}
+//--------------------------------------------------------------------------
+enum ImageSourceType {galerie, camera}
+//--------------------------------------------------------------------------
+class ImageAff extends StatefulWidget {
+  final type;
+  ImageAff(this.type);
+
+  @override
+  ImageAffState createState() => ImageAffState(type);
+}
+
+class ImageAffState extends State<ImageAff> {
+  var _image;
+  var imagePicker;
+  var type;
+
+  ImageAffState(this.type);
+
+  @override
+  void initState() {
+    super.initState();
+    imagePicker = ImagePicker();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<ModelProviderSary>(
+      builder: (context, provider, child){
+        return (
+          Container(
+            //margin: EdgeInsets.all(5),
+            alignment: Alignment.center,
+            width: 100, height: 100,
+            child: Column(
+                children: <Widget>[
+                  Spacer(flex: 1,),
+                  Center(
+                    child: GestureDetector(
+                      onTap: () async {
+                        var source = type == ImageSourceType.camera
+                          ? ImageSource.camera
+                          : ImageSource.gallery;
+                        XFile image = await imagePicker.pickImage(
+                          source: source, 
+                          imageQuality: 50, 
+                          preferredCameraDevice: CameraDevice.front);
+                        setState(() {
+                          provider._allSary.add(File(image.path));
+                        });
+                      },
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: _image != null
+                        ? Image.file(
+                          _image,
+                          width: 100.0,
+                          height: 100.0,
+                          fit: BoxFit.fitHeight,
+                        )
+                        : Container(
+                          decoration: BoxDecoration(
+                              color:Colors.white),
+                          width: 100,
+                          height: 100,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(Icons.add_a_photo, color: mainThemeColor, ),
+                              Text('Prendre des photos', style: TextStyle(color: myGreen), textAlign: TextAlign.center,),
+                            ],
+                          ),
+                        ),
+                    ),
+                  ),
+                ),
+                Spacer(flex: 1,)
+              ],
+            ),
+          )
+        );
+      }
+    );
+  }
+}
+//---------------------------------------------------------
+class PDPAff extends StatefulWidget {
+  final type;
+  PDPAff(this.type);
+
+  @override
+  PDPAffState createState() => PDPAffState(type);
+}
+
+class PDPAffState extends State<PDPAff> {
+  var _imagePDP;
+  var imagePicker;
+  var type;
+
+  PDPAffState(this.type);
+
+  @override
+  void initState() {
+    super.initState();
+    imagePicker = ImagePicker();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<ModelProviderSary>(
+      builder: (context, provider, child){
+        return (
+          Container(
+            //margin: EdgeInsets.all(5),
+            alignment: Alignment.center,
+            width: 100, height: 100,
+            child: Column(
+                children: <Widget>[
+                  Spacer(flex: 1,),
+                  Center(
+                    child: GestureDetector(
+                      onTap: () async {
+                        var source = type == ImageSourceType.camera
+                          ? ImageSource.camera
+                          : ImageSource.gallery;
+                        XFile image = await imagePicker.pickImage(
+                          source: source, 
+                          imageQuality: 50, 
+                          preferredCameraDevice: CameraDevice.front);
+                        setState(() {
+                          _imagePDP = File(image.path);
+                        });
+                      },
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: _imagePDP != null
+                        ? Image.file(
+                          _imagePDP,
+                          width: 100.0,
+                          height: 100.0,
+                          fit: BoxFit.fitHeight,
+                        )
+                        : Container(
+                          decoration: const BoxDecoration(
+                              color:Colors.white),
+                          width: 100,
+                          height: 100,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(Icons.person_add_sharp, color: mainThemeColor, ),
+                              Text('Prendre un photo de profil', style: TextStyle(color: myGreen), textAlign: TextAlign.center,),
+                            ],
+                          ),
+                        ),
+                    ),
+                  ),
+                ),
+                Spacer(flex: 1,)
+              ],
+            ),
+          )
+        );
+      }
     );
   }
 }

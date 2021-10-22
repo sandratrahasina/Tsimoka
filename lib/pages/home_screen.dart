@@ -75,9 +75,7 @@ class MainFrame extends StatelessWidget {
 
 
 class MenuCardContainerHome extends StatelessWidget {
-  const MenuCardContainerHome({
-    Key? key,
-  }) : super(key: key);
+  
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +92,7 @@ class MenuCardContainerHome extends StatelessWidget {
 }
 
 class Intermediaire extends StatelessWidget {
-  const Intermediaire({
+  Intermediaire({
     Key? key, required this.sWidth, required this.cac, required this.crossSpacing, required this.mainSpacing,
   }) : super(key: key);
 

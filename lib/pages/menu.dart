@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tsimoka/utils/_var.dart';
 
 
@@ -34,16 +35,16 @@ class MainFrame extends StatelessWidget {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             child: Center(
               child: ListView(
-                children: [
-                  SizedBox(height: 20,),
+                children:[
+                  const SizedBox(height: 20,),
                   IconButton( 
                     onPressed: (){ Navigator.pop(context); }, 
-                    icon: Icon(Icons.close_rounded, color: Colors.red, size: 25,)
+                    icon: const Icon(Icons.close_rounded, color: Colors.red, size: 25,)
                   ),
-                  SizedBox(height: 100,),
-                  SingleMenuEto(label: 'Acceuil', route: '/'),
-                  SingleMenuEto(label: 'Notification', route: '/notification'),
-                  SingleMenuEto(label: 'Se deconnecter', route: '/'),
+                  const SizedBox(height: 100,),
+                  const SingleMenuEto(label: 'Acceuil', route: '/'),
+                  const SingleMenuEto(label: 'Notification', route: '/notification'),
+                  const SingleMenuEto(label: 'Se deconnecter', route: '/'),
                 ],
               ),
             ),
@@ -66,10 +67,15 @@ class SingleMenuEto extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(label, style: TextStyle(color: mainThemeColor, fontSize: 30), textAlign: TextAlign.center,),
-      onTap: () {
-        // Update the state of the app
-        // ...
-        // Then close the drawer
+      onTap: () async {
+                final SharedPreferences prefs = await SharedPreferences.getInstance();
+                final int counter = (prefs.getInt('counter') ?? 0) + 1;
+                var _counter = prefs.setInt("counter", counter).then((bool success) {
+                  return counter;
+                });
+                _counter.then((value) {
+                  print(value);
+                });
         Navigator.popAndPushNamed(context, route );
       },
     );
